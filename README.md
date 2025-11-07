@@ -344,45 +344,80 @@ done
 ## 26. Next Steps
 Add Helm values customizations, SSO configuration examples, and automated dashboard tests (JSON lint).
 
-## 27. Grafana Play - Example Dashboards
+## 27. Dashboard Gallery - Setup Stages with Screenshots
 
-### 27.1 Node Exporter Full Dashboard
-![Node Exporter Full Dashboard](https://play.grafana.org/api/dashboards/uid/000000010)
+### 27.1 Stage 1: Initial Setup & Login
+**Fresh Grafana Installation**
+![Grafana Login](assets/screenshots/01-login-page.png)
 
-### 27.2 Prometheus 2.0 Full Dashboard
-![Prometheus 2.0 Full Dashboard](https://play.grafana.org/api/dashboards/uid/000000002)
+**Home Dashboard (Empty State)**
+![Empty Home](assets/screenshots/02-home-dashboard.png)
 
-### 27.3 Fetch sample dashboard images (public play site)
+### 27.2 Stage 2: Data Source Configuration
+**Adding Data Source**
+![Add Data Source](assets/screenshots/03-add-datasource.png)
 
-Use Grafana Play (public demo) to obtain non-sensitive example screenshots. Verify license before redistribution.
+**Data Source Configuration Form**
+![Prometheus Config](assets/screenshots/04-prometheus-config.png)
+
+### 27.3 Stage 3: Creating Your First Dashboard
+**New Dashboard Creation**
+![New Dashboard](assets/screenshots/05-new-dashboard.png)
+
+**Panel Editor Interface**
+![Panel Editor](assets/screenshots/06-panel-editor.png)
+
+### 27.4 Stage 4: Production Dashboards Examples
+
+**Node Exporter Dashboard - System Metrics**
+![Node Exporter Dashboard](assets/screenshots/node-exporter-dashboard.png)
+
+**Kubernetes Cluster Monitoring**
+![K8s Dashboard](assets/screenshots/k8s-dashboard.png)
+
+**Prometheus Metrics**
+![Prometheus Dashboard](assets/screenshots/prometheus-dashboard.png)
+
+### 27.5 Stage 5: Advanced Features
+
+**Alert Rules Configuration**
+![Alert Rules](assets/screenshots/09-alert-rules.png)
+
+**Explore Interface for Ad-hoc Queries**
+![Explore Interface](assets/screenshots/10-explore-interface.png)
+
+### 27.6 Different Visualization Types
+
+**Time Series Graphs**
+![Time Series](assets/screenshots/07-timeseries-panel.png)
+
+**Stat Panels & Gauges**
+![Stat Panels](assets/screenshots/08-stat-panel.png)
+
+### 27.7 Download and Setup Images
+
+To get all the dashboard images, run:
 
 ```sh
-export PLAY_URL="https://play.grafana.org"
-mkdir -p assets/screenshots
-# Example dashboard UIDs (replace with actual ones you need)
-# Get list: curl -s $PLAY_URL/api/search?query= | jq -r '.[].uid'
-declare -A DASHES=(
-  [node-exporter]="000000010"
-  [prometheus-2-0]="000000002"
-  [worldmap]="fedSvLYMk"
-)
-
-# Full dashboard renders
-for name in "${!DASHES[@]}"; do
-  uid="${DASHES[$name]}"
-  curl -fsSL "$PLAY_URL/render/d/${uid}?orgId=1&from=now-6h&to=now&kiosk&width=1800&height=1000&tz=UTC" \
-    -o "assets/screenshots/${name}-full.png"
-done
-
-# Single panel example (panelId 2 placeholder)
-curl -fsSL "$PLAY_URL/render/d-solo/${DASHES[node-exporter]}?orgId=1&from=now-6h&to=now&panelId=2&width=1600&height=900&tz=UTC" \
-  -o assets/screenshots/node-exporter-panel-2.png
+chmod +x scripts/download-images.sh
+./scripts/download-images.sh
 ```
 
-Referenced images (after download):
-- Node Exporter (full) ![Node Exporter](assets/screenshots/node-exporter-full.png)
-- Prometheus 2.0 (full) ![Prometheus 2.0](assets/screenshots/prometheus-2-0-full.png)
-- Worldmap Panel (full) ![Worldmap](assets/screenshots/worldmap-full.png)
-- Node Exporter Panel 2 ![Node Exporter Panel 2](assets/screenshots/node-exporter-panel-2.png)
+Or manually create the directory and download:
+```sh
+mkdir -p assets/screenshots
+curl -fsSL "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/getting-started/login-page.png" \
+  -o "assets/screenshots/01-login-page.png"
+```
 
-Note: Replace placeholder UIDs/panelIds if they change upstream; re-run listing command to refresh.
+### 27.8 Live Demo Links
+- **Grafana Play**: https://play.grafana.org (Live demo environment)
+- **Demo Dashboards**: https://grafana.com/grafana/dashboards/ (Community dashboards)
+- **Live K8s Dashboard**: https://grafana.com/grafana/dashboards/7249-kubernetes-cluster/
+
+### 27.9 Verify Images Work
+After downloading, verify images with:
+```sh
+ls -la assets/screenshots/
+file assets/screenshots/*.png
+```
