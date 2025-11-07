@@ -343,3 +343,46 @@ done
 
 ## 26. Next Steps
 Add Helm values customizations, SSO configuration examples, and automated dashboard tests (JSON lint).
+
+## 27. Grafana Play - Example Dashboards
+
+### 27.1 Node Exporter Full Dashboard
+![Node Exporter Full Dashboard](https://play.grafana.org/api/dashboards/uid/000000010)
+
+### 27.2 Prometheus 2.0 Full Dashboard
+![Prometheus 2.0 Full Dashboard](https://play.grafana.org/api/dashboards/uid/000000002)
+
+### 27.3 Fetch sample dashboard images (public play site)
+
+Use Grafana Play (public demo) to obtain non-sensitive example screenshots. Verify license before redistribution.
+
+```sh
+export PLAY_URL="https://play.grafana.org"
+mkdir -p assets/screenshots
+# Example dashboard UIDs (replace with actual ones you need)
+# Get list: curl -s $PLAY_URL/api/search?query= | jq -r '.[].uid'
+declare -A DASHES=(
+  [node-exporter]="000000010"
+  [prometheus-2-0]="000000002"
+  [worldmap]="fedSvLYMk"
+)
+
+# Full dashboard renders
+for name in "${!DASHES[@]}"; do
+  uid="${DASHES[$name]}"
+  curl -fsSL "$PLAY_URL/render/d/${uid}?orgId=1&from=now-6h&to=now&kiosk&width=1800&height=1000&tz=UTC" \
+    -o "assets/screenshots/${name}-full.png"
+done
+
+# Single panel example (panelId 2 placeholder)
+curl -fsSL "$PLAY_URL/render/d-solo/${DASHES[node-exporter]}?orgId=1&from=now-6h&to=now&panelId=2&width=1600&height=900&tz=UTC" \
+  -o assets/screenshots/node-exporter-panel-2.png
+```
+
+Referenced images (after download):
+- Node Exporter (full) ![Node Exporter](assets/screenshots/node-exporter-full.png)
+- Prometheus 2.0 (full) ![Prometheus 2.0](assets/screenshots/prometheus-2-0-full.png)
+- Worldmap Panel (full) ![Worldmap](assets/screenshots/worldmap-full.png)
+- Node Exporter Panel 2 ![Node Exporter Panel 2](assets/screenshots/node-exporter-panel-2.png)
+
+Note: Replace placeholder UIDs/panelIds if they change upstream; re-run listing command to refresh.
