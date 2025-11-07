@@ -394,30 +394,8 @@ Add Helm values customizations, SSO configuration examples, and automated dashbo
 **Stat Panels & Gauges**
 ![Stat Panels](assets/screenshots/08-stat-panel.png)
 
-### 27.7 Download and Setup Images
 
-To get all the dashboard images, run:
-
-```sh
-chmod +x scripts/download-images.sh
-./scripts/download-images.sh
-```
-
-Or manually create the directory and download:
-```sh
-mkdir -p assets/screenshots
-curl -fsSL "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/getting-started/login-page.png" \
-  -o "assets/screenshots/01-login-page.png"
-```
-
-### 27.8 Live Demo Links
+### 27.7 Live Demo Links
 - **Grafana Play**: https://play.grafana.org (Live demo environment)
 - **Demo Dashboards**: https://grafana.com/grafana/dashboards/ (Community dashboards)
 - **Live K8s Dashboard**: https://grafana.com/grafana/dashboards/7249-kubernetes-cluster/
-
-### 27.9 Verify Images Work
-After downloading, verify images with:
-```sh
-ls -la assets/screenshots/
-file assets/screenshots/*.png
-```
